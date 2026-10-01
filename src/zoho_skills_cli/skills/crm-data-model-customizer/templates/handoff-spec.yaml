@@ -1,0 +1,86 @@
+# Canonical model skeleton — every pipeline phase (Data Model, Pipelines, Blueprints,
+# Automation, Personas, Validation, Handoff) reads from and writes into a copy of this
+# structure for the current engagement. Must stay exactly aligned with
+# specs/004-crm-data-model-customizer/contracts/handoff-spec.schema.md.
+#
+# package_version is the contract-shape version (semver), not the engagement version.
+
+package_version: "1.0.0"
+prospect_slug: ""
+generated_at: ""
+source_register_version: ""
+
+modules: []
+# - api_name: ""
+#   is_standard: false
+#   req_ids: []
+#   domain: ""              # used by yaml_to_mermaid.py --domain to group per-domain diagrams
+#   fields: []
+#     # - api_name: ""
+#     #   type: ""          # one of: string,text,int,decimal,currency,boolean,date,datetime,
+#     #                      # picklist,multipicklist,email,phone,url,lookup,ownerlookup,
+#     #                      # formula,autonumber,file,subform
+#     #   req_ids: []
+#   relationships: []
+#     # - target_module: ""
+#     #   lookup_field_api_name: ""
+#     #   cardinality: ""   # many_to_one | many_to_many | subform
+#     #   req_ids: []
+
+pipelines: []
+# - name: ""
+#   stages: []
+#     # - name: ""
+#     #   probability: 0
+#     #   forecast_category: ""
+#     #   entry_criteria: ""
+#     #   exit_criteria: ""
+#     #   required_fields: []
+#     #   req_ids: []
+
+blueprints: []
+# - module: ""               # Leads | Deals
+#   states: []
+#   transitions: []
+#     # - from: ""
+#     #   to: ""
+#     #   mandatory_fields: []
+#     #   validations: []
+#     #   approvals: []
+#     #   req_ids: []
+
+automation_rules: []
+# - rule_id: ""
+#   type: ""                 # workflow | assignment
+#   trigger: ""
+#   condition: ""
+#   action: ""
+#   reads_fields: []
+#   writes_fields: []
+#   req_ids: []
+
+personas: []
+# - persona: ""
+#   goals: ""
+#   kpis: []
+#     # - name: ""
+#     #   formula: ""
+#     #   source_fields: []
+#     #   req_ids: []
+
+traceability_summary:
+  total_requirements: 0
+  covered: 0
+  partial: 0
+  gap: 0
+  deferred: 0
+
+validation:
+  run_id: ""
+  blocking_failure_count: 0
+  checks: []
+  # - name: ""
+  #   pass: true
+
+erd_source: ""
+erd_content_hash: ""

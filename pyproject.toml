@@ -1,0 +1,23 @@
+[project]
+name = "zoho-skills-cli"
+version = "0.1.0"
+description = "Install Zoho CRM pre-sales skills (CRM Data Model Customizer, Demo Pulse) into a project for use with Claude Code and other coding agents."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.7.0",
+]
+
+[project.scripts]
+zoho-skills = "zoho_skills_cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatchling.build.targets.wheel]
+packages = ["src/zoho_skills_cli"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/zoho_skills_cli/skills" = "zoho_skills_cli/skills"
