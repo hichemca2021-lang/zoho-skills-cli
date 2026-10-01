@@ -18,10 +18,10 @@ No local install required — run directly with [uv](https://docs.astral.sh/uv/)
 
 ```bash
 # Create a new project directory and install the skills into it
-uvx --from git+https://github.com/<your-org>/zoho-skills-cli.git zoho-skills init my-project
+uvx --from git+https://github.com/hichemca2021-lang/zoho-skills-cli.git zoho-skills init my-project
 
 # Or install into the current directory
-uvx --from git+https://github.com/<your-org>/zoho-skills-cli.git zoho-skills init --here
+uvx --from git+https://github.com/hichemca2021-lang/zoho-skills-cli.git zoho-skills init --here
 ```
 
 This copies both skills into `.claude/skills/` in the target project. Start
