@@ -5,6 +5,11 @@ description: Given discovery material about a prospect (calls, notes, emails, do
 
 # CRM Data Model Customizer
 
+> **Process**: CRM Design — turn discovery material into a traceable, validated Zoho CRM
+> design package.
+> **Outcome**: `output/<prospect-slug>/12-handoff-spec.yaml` plus the full design package,
+> ready for Implementation Planning (`customization-implementation-planner`).
+
 ## Read-only safety boundary (spec FR-018)
 
 **This skill never writes to any live CRM organization.** Every phase below (0 through 9)

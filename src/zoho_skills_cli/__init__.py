@@ -22,12 +22,31 @@ SKILLS_SRC = Path(__file__).parent / "skills"
 
 # Each skill's SKILL.md `name:` frontmatter is the slash-command the agent
 # recognizes once installed (e.g. invoked as /crm-data-model-customizer).
+# Order reflects the suggested engagement flow: discover -> design -> plan -> demo.
 SKILLS = [
+    {
+        "dir": "crm-discovery-interviewer",
+        "command": "/crm-discovery-interviewer",
+        "label": "Discovery Interview",
+        "blurb": "Interview a CRM-naive prospect and produce a structured customer brief",
+    },
+    {
+        "dir": "design-prospect",
+        "command": "/design-prospect",
+        "label": "Design Prospect (guided intake)",
+        "blurb": "Guided front door into CRM Design for an engineer who hasn't gathered discovery material yet",
+    },
     {
         "dir": "crm-data-model-customizer",
         "command": "/crm-data-model-customizer",
         "label": "CRM Data Model Customizer",
         "blurb": "Design a traceable, validated Zoho CRM data model package for a prospect",
+    },
+    {
+        "dir": "customization-implementation-planner",
+        "command": "/customization-implementation-planner",
+        "label": "Implementation Plan Generator",
+        "blurb": "Turn a validated design package into a credential-free, API-executable build plan",
     },
     {
         "dir": "demo-package",
@@ -105,9 +124,12 @@ def _print_next_steps(project_name: str, is_here: bool) -> None:
     workflow = Text()
     workflow.append("Typical flow: ", style="bold")
     workflow.append(
-        "run /crm-data-model-customizer first to produce a design package for a prospect, "
-        "then hand that package to /demo-package (with a connected Zoho CRM MCP server) "
-        "to generate the demo plan and spoken transcript."
+        "run /crm-discovery-interviewer (or /design-prospect if you already have discovery "
+        "material) to produce a customer brief, hand it to /crm-data-model-customizer to "
+        "produce a validated design package, hand that to "
+        "/customization-implementation-planner for a credential-free API build plan, then "
+        "hand the built org to /demo-package (with a connected Zoho CRM MCP server) to "
+        "generate the demo plan and spoken transcript."
     )
     console.print(Panel(workflow, title="Suggested Workflow", border_style="blue"))
 

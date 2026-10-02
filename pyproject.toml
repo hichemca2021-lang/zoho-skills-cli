@@ -1,7 +1,7 @@
 [project]
 name = "zoho-skills-cli"
 version = "0.1.0"
-description = "Install Zoho CRM pre-sales skills (CRM Data Model Customizer, Demo Pulse) into a project for use with Claude Code and other coding agents."
+description = "Install Zoho CRM pre-sales skills (discovery interview, CRM design, implementation planning, demo packaging) into a project for use with Claude Code and other coding agents."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

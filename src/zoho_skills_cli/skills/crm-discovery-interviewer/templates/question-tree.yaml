@@ -1,0 +1,123 @@
+# Dependency-ordered question tree. ALL question text here is plain business language —
+# no CRM terminology (modules, fields, blueprints, workflows, pipelines-as-objects) per spec FR-002.
+# `depends_on` lists question ids that must be `answered` before this one may move to `asked`
+# (spec FR-006). `open_then_suggest: true` marks questions that must follow the
+# open-first-then-suggest-2-to-3-with-default flow (spec FR-004) when the open answer is vague.
+# `coverage_category` maps each question to one of the five FR-013 provisional categories.
+
+questions:
+  # --- business_process_and_stages ---
+  - id: process-overview
+    coverage_category: business_process_and_stages
+    depends_on: []
+    open_then_suggest: false
+    purpose: "to understand how work actually moves through your business day to day"
+    prompt: >
+      Can you walk me through what happens, step by step, from the moment a new customer or
+      opportunity shows up, to the point where it's won, lost, or closed out?
+    requires_concrete_instance: true
+    concrete_instance_prompt: >
+      Before we generalize — can you walk me through the very last case that happened, start to
+      finish? What actually happened at each step?
+
+  - id: process-stages-labels
+    coverage_category: business_process_and_stages
+    depends_on: [process-overview]
+    open_then_suggest: true
+    purpose: "to understand what you call each stage, in your own words"
+    prompt: >
+      What do you and your team usually call each of those steps? Is there a name you'd use for
+      "just started," "in progress," and "done" in your world?
+    suggested_options_hint: >
+      If vague: offer 2-3 plain-language stage-naming patterns common for similar businesses
+      (e.g., "New -> In Discussion -> Proposal Sent -> Won/Lost"), tagged [WEB]/[INFERRED] per
+      FR-009, with one marked as the recommended default.
+
+  - id: process-outcomes
+    coverage_category: business_process_and_stages
+    depends_on: [process-overview]
+    open_then_suggest: false
+    purpose: "to understand what 'done' looks like, good or bad"
+    prompt: >
+      When something doesn't end in a sale, what usually happens instead? What are the different
+      ways a case can end?
+
+  # --- roles_and_people ---
+  - id: roles-involved
+    coverage_category: roles_and_people
+    depends_on: [process-overview]
+    open_then_suggest: false
+    purpose: "to understand who touches this process and what each person does"
+    prompt: >
+      Who's involved in that process from start to finish, and what does each person actually do
+      at each step?
+
+  - id: roles-handoffs
+    coverage_category: roles_and_people
+    depends_on: [roles-involved]
+    open_then_suggest: true
+    purpose: "to understand how work moves between people"
+    prompt: >
+      When work moves from one person to another, how does that happen today — do they tell each
+      other directly, send something over, or is there another way?
+    suggested_options_hint: >
+      If vague: offer 2-3 common handoff patterns (verbal/Slack/email, shared spreadsheet,
+      shared tool) tagged [WEB]/[INFERRED], one marked recommended default.
+
+  # --- key_entities ---
+  - id: entities-tracked
+    coverage_category: key_entities
+    depends_on: [process-overview]
+    open_then_suggest: false
+    purpose: "to understand what kinds of things you keep track of"
+    prompt: >
+      What are the main things you keep track of day to day — customers, orders, cases, projects,
+      something else? What would you call each one?
+
+  - id: entities-key-details
+    coverage_category: key_entities
+    depends_on: [entities-tracked]
+    open_then_suggest: false
+    purpose: "to understand what details matter most about each of those things"
+    prompt: >
+      For the last real case you mentioned, what details about it actually mattered when you were
+      deciding what to do next?
+
+  # --- success_metrics ---
+  - id: success-definition
+    coverage_category: success_metrics
+    depends_on: [process-outcomes]
+    open_then_suggest: false
+    purpose: "to understand how you know things are going well"
+    prompt: >
+      How do you know, at a glance, whether things are going well or not this week or this month?
+
+  - id: success-metrics-tracked
+    coverage_category: success_metrics
+    depends_on: [success-definition]
+    open_then_suggest: true
+    purpose: "to understand which specific numbers matter most to you"
+    prompt: >
+      Of the things that tell you it's going well, which one or two matter most right now?
+    suggested_options_hint: >
+      If vague: offer 2-3 common metrics for similar businesses (win rate, average time to
+      close, volume handled) tagged [WEB]/[INFERRED], one marked recommended default.
+
+  # --- explicit_constraints ---
+  - id: constraints-musthaves
+    coverage_category: explicit_constraints
+    depends_on: [roles-involved, entities-tracked]
+    open_then_suggest: false
+    purpose: "to understand anything that absolutely has to work a certain way"
+    prompt: >
+      Is there anything about how this works today that absolutely can't change — a rule, a
+      compliance need, a tool you're stuck with, anything like that?
+
+  - id: constraints-pain-points
+    coverage_category: explicit_constraints
+    depends_on: [constraints-musthaves]
+    open_then_suggest: false
+    purpose: "to understand what's actually been going wrong"
+    prompt: >
+      Thinking about that last real case again — was there a point where something slipped,
+      got lost, or took longer than it should have?

@@ -1,0 +1,46 @@
+# Session state schema template for one prospect engagement.
+# A real session file lives at output/<prospect-slug>/session-state.yaml and follows this shape.
+# See specs/005-crm-discovery-interviewer/data-model.md "Interview Session" / "Captured Answer".
+
+prospect_slug: "<prospect-slug>"
+created_at: "<ISO-8601 timestamp>"
+updated_at: "<ISO-8601 timestamp>"
+
+# One entry per question in templates/question-tree.yaml, by question id.
+# status: unasked | asked | answered | skipped | deferred
+#   - skipped: a dependency (depends_on) is not yet `answered` (FR-006)
+#   - deferred: this question itself is answered [UNDECIDED-DELEGATED]
+question_tree_state:
+  <question_id>:
+    status: unasked
+    answers:
+      # Append-only log of Captured Answers for this question. The last entry
+      # with superseded_by == null is the current value; earlier entries are
+      # kept, not deleted, so contradictions are visible (Edge Cases).
+      - value: "<recorded business-language content>"
+        origin_tag: "[CUSTOMER]"   # one of the 7 tags in references/origin-tags.md
+        source_exchange_ref: "<turn/exchange id>"
+        superseded_by: null        # set to a later answer's exchange ref if contradicted
+
+# Sources consulted before/while asking (spec "Ingested Source").
+ingested_sources:
+  - source_type: website        # website | document | prior_session
+    content_summary: "<finding, in business language>"
+    tag: "[WEB]"                 # [WEB] or [DOC]
+    confirmed: false
+    confirming_answer_ref: null  # set once a Captured Answer confirms/corrects this
+
+# Which of the five FR-013 provisional coverage categories are satisfied.
+# A category counts as satisfied once it has >=1 [CUSTOMER]/[SUGGESTED-ACCEPTED] answer,
+# or is explicitly [UNDECIDED-DELEGATED] and acknowledged in the brief's Outstanding section.
+coverage_status:
+  business_process_and_stages: false
+  roles_and_people: false
+  key_entities: false
+  success_metrics: false
+  explicit_constraints: false
+
+# Regulated topics raised and deflected (FR-011), carried into the brief for engineer follow-up.
+human_review_flags:
+  - topic: "<e.g., pricing, SLA, competitor comparison>"
+    raised_at: "<turn/exchange id>"
